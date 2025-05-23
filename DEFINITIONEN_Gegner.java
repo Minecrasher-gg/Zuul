@@ -1,4 +1,4 @@
-class DEFINITIONEN_Gegner {
+public class DEFINITIONEN_Gegner {
 	protected String Name;
 	protected Integer Rank;
 	protected Integer KiTyp;
