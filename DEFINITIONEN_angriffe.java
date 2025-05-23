@@ -1,4 +1,4 @@
-class DEFINITIONEN_angriffe {
+public class DEFINITIONEN_angriffe {
     protected String Name;
     protected Integer BP;
     protected Integer Cost;
