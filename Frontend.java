@@ -1,6 +1,10 @@
 import java.util.Scanner;
 public class Frontend
 {
+    public int Mana;
+    public String ManaStyled;
+    public int HP;
+    public String HPStyled;
     public Frontend() {
         MainMenu();
         Scanner GameSelect = new Scanner(System.in);
@@ -60,6 +64,14 @@ public class Frontend
             System.out.println("                                                                                                                                                                          ");
             i++;
         }
+    }
+    public static void GamePrintWorld() {
+        
+    }
+    public void GamePrintActions() {
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+        System.out.println("|    Mana[", ManaStyled, "]                 HP[", HPStyled, "]                                                                                                             |");
+        System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
     }
 }
 
