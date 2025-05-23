@@ -2,6 +2,42 @@ import java.util.Scanner;
 public class Frontend
 {
     public Frontend() {
+        MainMenu();
+        Scanner GameSelect = new Scanner(System.in);
+        String GameSelected = GameSelect.nextLine();
+        if (GameSelected.equals("N")) {
+            MainMenuS1();
+            try {
+                Thread.sleep(1 * 1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            MainMenu();
+        }else {
+            System.out.println("Nothing selected");
+        }
+    }
+    public static void MainMenu() {
+        Logo();
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
+        System.out.println("|                           |(N)ew Game              |                                      |     (C)redits          |                                                     |");
+        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+    }
+    public static void MainMenuS1() {
+        Logo();
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
+        System.out.println("|                           |(N)ew Game████████████ |                                      |     (C)redits          |                                                     |");
+        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+    }
+    public static void Logo() {
         int i = 0;
         while (i < 25) {
             System.out.println("");
@@ -20,23 +56,10 @@ public class Frontend
                                                                                                                                                                                                                                           
         """);
         i = 0;
-        while (i < 20) {
-            System.out.println("|                                                                                                                                                                          |");
+        while (i < 23) {
+            System.out.println("                                                                                                                                                                          ");
             i++;
         }
-        
-        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
-        System.out.println("|                                                                                                                                                                          |");
-        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
-        System.out.println("|                           |(N)ew Game              |                                      |     (C)redits          |                                                     |");
-        System.out.println("|                           |------------------------|                                      |------------------------|                                                     |");
-        System.out.println("|                                                                                                                                                                          |");
-        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
-        Scanner GameSelect = new Scanner(System.in);
-        String GameSelected = GameSelect.nextLine();
-    }
-    public static void MainMenu() {
-        
     }
 }
 
