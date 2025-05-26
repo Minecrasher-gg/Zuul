@@ -2,8 +2,11 @@ import java.util.Scanner;
 public class Frontend
 {
     public int Mana;
+    public int Manafull;
+    public int Manacurrent;
     public String ManaStyled;
-    public int HP;
+    public int HPfull;
+    public int HPcurrent;
     public String HPStyled;
     public Frontend() {
         MainMenu();
@@ -17,6 +20,12 @@ public class Frontend
                 Thread.currentThread().interrupt();
             }
             MainMenu();
+            HPfull = 10;
+            HPcurrent = 5;
+            Manafull = 20;
+            Manacurrent = 0;
+            GameCalculateStats();
+            GamePrintActions();
         }else {
             System.out.println("Nothing selected");
         }
@@ -68,10 +77,40 @@ public class Frontend
     public static void GamePrintWorld() {
         
     }
+    public void GameCalculateStats() {
+        HPStyled = "";
+        int i = HPfull/HPcurrent;
+        while (i < HPcurrent*5) {
+            HPStyled = HPStyled+ "#";
+            i = i + HPfull/HPcurrent;
+        }
+        while (i < HPfull*5) {
+            HPStyled = HPStyled+ "-";
+            i = i + HPfull/HPcurrent;
+        }
+        ManaStyled = "";
+        i = Manafull/Manacurrent;
+        while (i < Manacurrent*5) {
+            HPStyled = ManaStyled+ "#";
+            i = i + Manafull/Manacurrent;
+        }
+        while (i < Manafull*5) {
+            ManaStyled = ManaStyled+ "-";
+            i = i + Manafull/Manacurrent;
+        }
+    }
     public void GamePrintActions() {
         System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
-        System.out.println("|    Mana[", ManaStyled, "]                 HP[", HPStyled, "]                                                                                                             |");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|    Mana["+ ManaStyled+ "]                 HP["+ HPStyled+ "] "+ HPcurrent+"/"+ HPfull+ "                                                                                                         |");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+        System.out.println("|                                                                                                                                                                          |");
         System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
+        System.out.println("|                          |(M)agic            |             |(W)eapon           |             |(C)ombo            |                                                       |");
+        System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
+        System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
     }
 }
 
