@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 public class Frontend
 {
     public int Mana;
@@ -25,6 +26,7 @@ public class Frontend
             Manafull = 20;
             Manacurrent = 0;
             GameCalculateStats();
+            GamePrintWorld();
             GamePrintActions();
         }else {
             System.out.println("Nothing selected");
@@ -69,34 +71,95 @@ public class Frontend
                                                                                                                                                                                                                                           
         """);
         i = 0;
-        while (i < 23) {
+        while (i < 22) {
             System.out.println("                                                                                                                                                                          ");
             i++;
         }
     }
-    public static void GamePrintWorld() {
+    Random random = new Random();
+    public boolean getBoolean() {
+        return random.nextBoolean();
+    }
+    public void GamePrintWorld() {
+        String Door2;
+        boolean ProbDoor2 = getBoolean();
+        if ( ProbDoor2 == true) {
+            Door2 = "|========|";
+        }else {
+            Door2 ="----------";
+        }
+        System.out.println("");
+        System.out.println("");
+        System.out.println("                                    |-------------------------------------------------"+ Door2 +"--------------------------------------|");
+        System.out.println("                                    |                                                                                                 |");
+        System.out.println("                                    |                                                                                                 |");
+        System.out.println("                                    |                                                                                                 |");
+        if (getBoolean() == true) {
+            System.out.println("                                    -                                                                                                 -");
+            int i = 0;
+            while (i < 8) {
+                System.out.println("                                    =                                                                                                 =");
+                i++;
+            }
+            System.out.println("                                    -                                                                                                 -");
+        }else {
+            int i = 0;
+            while (i < 11) {
+                System.out.println("                                    |                                                                                                 |");
+                i++;
+            }
+        }
         
+        System.out.println("                                    |                                                                                                 |");
+        System.out.println("                                    |                                                                                                 |");
+        System.out.println("                                    |                                                                                                 |");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
     }
     public void GameCalculateStats() {
         HPStyled = "";
-        int i = HPfull/HPcurrent;
+        int i;
+        if ( HPcurrent == 0) {
+            i = 0;
+        }else {
+            i = HPfull/HPcurrent;
+        }
         while (i < HPcurrent*5) {
             HPStyled = HPStyled+ "#";
             i = i + HPfull/HPcurrent;
         }
-        while (i < HPfull*5) {
-            HPStyled = HPStyled+ "-";
-            i = i + HPfull/HPcurrent;
+        if (HPcurrent > 0) {
+            while (i < HPfull*5) {
+                HPStyled = HPStyled+ "-";
+                i = i + HPfull/HPcurrent;
+            }
+        }else {
+            while (i < HPfull*20) {
+                HPStyled = HPStyled + "-";
+                i = i + HPfull;
+            }
         }
         ManaStyled = "";
-        i = Manafull/Manacurrent;
+        if ( Manacurrent == 0) {
+            i = 0;
+        }else {
+            i = Manafull/Manacurrent;
+        }
         while (i < Manacurrent*5) {
             HPStyled = ManaStyled+ "#";
             i = i + Manafull/Manacurrent;
         }
-        while (i < Manafull*5) {
-            ManaStyled = ManaStyled+ "-";
-            i = i + Manafull/Manacurrent;
+        if (Manacurrent > 0) {
+            while (i < Manafull*5) {
+                ManaStyled = ManaStyled+ "-";
+                i = i + Manafull/Manacurrent;
+            }
+        }else {
+            while (i < Manafull*20) {
+                ManaStyled = ManaStyled+ "-";
+                i = i + Manafull;
+            }
         }
     }
     public void GamePrintActions() {
