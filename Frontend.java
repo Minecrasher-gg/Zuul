@@ -97,7 +97,12 @@ public class Frontend
         System.out.println("");
         System.out.println("");
         System.out.println("                                    |----------------------------------------------"+ Door2 +"-----------------------------------------|");
-        System.out.println("                                    |                                                                                                 |");
+        System.out.print("                                    |                      ");
+        if (getBoolean() == true) {
+            System.out.print("▓███▓");
+        }else {
+            System.out.print("      ");
+        }
         System.out.println("                                    |                                                                                                 |");
         System.out.println("                                    |                                                                                                 |");
         if (getBoolean() == true && Door2.equals("|========|")) {
