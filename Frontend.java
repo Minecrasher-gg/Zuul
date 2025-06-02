@@ -9,6 +9,9 @@ public class Frontend
     public int HPfull;
     public int HPcurrent;
     public String HPStyled;
+    public boolean Door1;
+    public String Door2;
+    public boolean Door3;
     public Frontend() {
         MainMenu();
         Scanner GameSelect = new Scanner(System.in);
@@ -28,6 +31,7 @@ public class Frontend
             GameCalculateStats();
             GamePrintWorld();
             GamePrintActions();
+            GameGetInput();
         }else {
             System.out.println("Nothing selected");
         }
@@ -81,7 +85,6 @@ public class Frontend
         return random.nextBoolean();
     }
     public void GamePrintWorld() {
-        String Door2;
         boolean ProbDoor2 = getBoolean();
         if ( ProbDoor2 == true) {
             Door2 = "|========|";
@@ -90,29 +93,56 @@ public class Frontend
         }
         System.out.println("");
         System.out.println("");
-        System.out.println("                                    |-------------------------------------------------"+ Door2 +"--------------------------------------|");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("                                    |----------------------------------------------"+ Door2 +"-----------------------------------------|");
         System.out.println("                                    |                                                                                                 |");
         System.out.println("                                    |                                                                                                 |");
         System.out.println("                                    |                                                                                                 |");
-        if (getBoolean() == true) {
+        if (getBoolean() == true && Door2.equals("|========|")) {
             System.out.println("                                    -                                                                                                 -");
             int i = 0;
-            while (i < 8) {
-                System.out.println("                                    =                                                                                                 =");
-                i++;
+            if (getBoolean() == true) {
+                Door1 = true;
+                Door3 = true;
+                while (i < 8) {
+                    System.out.println("                                    =                                                                                                 =");
+                    i++;
+                }
+            }else {
+                Door1 = true;
+                Door3 = false;
+                while (i < 8) {
+                    System.out.println("                                    =                                                                                                 |");
+                    i++;
+                }
             }
             System.out.println("                                    -                                                                                                 -");
         }else {
             int i = 0;
-            while (i < 11) {
-                System.out.println("                                    |                                                                                                 |");
-                i++;
+            if (getBoolean() == true || Door2.equals("----------")) {
+                Door1 = false;
+                Door3 = true;
+                while (i < 8) {
+                    System.out.println("                                    |                                                                                                 =");
+                    i++;
+                }
+            }else {
+                Door1 = false;
+                Door3 = false;
+                while (i < 8) {
+                    System.out.println("                                    |                                                                                                 |");
+                    i++;
+                }
             }
         }
         
         System.out.println("                                    |                                                                                                 |");
         System.out.println("                                    |                                                                                                 |");
         System.out.println("                                    |                                                                                                 |");
+        System.out.println("");
+        System.out.println("");
         System.out.println("");
         System.out.println("");
         System.out.println("");
@@ -173,7 +203,45 @@ public class Frontend
         System.out.println("|                          |(M)agic            |             |(W)eapon           |             |(C)ombo            |                                                       |");
         System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
         System.out.println("|                                                                                                                                                                          |");
+        System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
+        if (Door1 == true) {
+            System.out.print("|                          |(A) left door      |             ");
+        }else {
+            System.out.print("|                          |█████████████████|             ");
+        }
+        if (Door2.equals("|========|")) {
+            System.out.print("|(S) front door     |             ");
+        }else {
+            System.out.print("|█████████████████|             ");
+        }
+        if (Door3 == true) {
+            System.out.println("|(D) right door     |                                                       |");
+        }else {
+            System.out.println("|█████████████████|                                                       |");
+        }
+        System.out.println("|                          |-------------------|             |-------------------|             |-------------------|                                                       |");
+        System.out.println("|                                                                                                                                                                          |");
         System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+    }
+    public void GameGetInput() {
+        Scanner DecidedInput = new Scanner(System.in);
+        String GameSetInput = DecidedInput.nextLine();
+        if (GameSetInput.equals("A") && Door1 == true) {
+            GamePrintWorld();
+            GameCalculateStats();
+            GamePrintActions();
+        }else if (GameSetInput.equals("S") && Door2.equals("|========|")) {
+            GamePrintWorld();
+            GameCalculateStats();
+            GamePrintActions();
+        }else if (GameSetInput.equals("D") && Door3 == true) {
+            GamePrintWorld();
+            GameCalculateStats();
+            GamePrintActions();
+        }else {
+            System.out.println("Err: Unknown Input");
+        }
+        GameGetInput();
     }
 }
 
