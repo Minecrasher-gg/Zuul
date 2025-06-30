@@ -1,7 +1,10 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
 public class Frontend
 {
+    private ArrayList<Gegner> DEFINITIONEN_Gegner= new ArrayList<Gegner>();
     public int Mana;
     public int Manafull;
     public int Manacurrent;
@@ -12,7 +15,46 @@ public class Frontend
     public boolean Door1;
     public String Door2;
     public boolean Door3;
+    public String CurrentEnemy;
+    public int CurrentEnemyHealth;
+    public int CurrentEnemyBasicAttack;
+    public int CurrentEnemyMagicAttack;
+    public boolean CurrentEnemyIsDead;
+    public boolean NewRoom;
     public Frontend() {
+        DEFINITIONEN_Gegner.add(new Gegner ("Zombie",    10, 3, 5));
+        DEFINITIONEN_Gegner.add(new Gegner ("Skelett",    8, 5, 7));
+        DEFINITIONEN_Gegner.add(new Gegner ("Fledermaus", 7, 2, 4));
+        DEFINITIONEN_Gegner.add(new Gegner ("Golem",      15, 8, 9));
+        DEFINITIONEN_Gegner.add(new Gegner ("Drache",     20, 7, 9));
+        MainMenu();
+        NewRoom = true;
+        CurrentEnemyIsDead = false;
+        Scanner GameSelect = new Scanner(System.in);
+        String GameSelected = GameSelect.nextLine();
+        if (GameSelected.equals("N")) {
+            MainMenuS1();
+            try {
+                Thread.sleep(1 * 1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            MainMenu();
+            HPfull = 10;
+            HPcurrent = 10;
+            Manafull = 20;
+            Manacurrent = 10;
+            GameCalculateStats();
+            GamePrintWorld();
+            GamePrintActions();
+            GameGetInput();
+        }else if (GameSelected.equals("C")) {
+            Credits();
+        }else {
+            System.out.println("Nothing selected");
+        }
+    }
+    public void FrontendAgain() {
         MainMenu();
         Scanner GameSelect = new Scanner(System.in);
         String GameSelected = GameSelect.nextLine();
@@ -32,6 +74,8 @@ public class Frontend
             GamePrintWorld();
             GamePrintActions();
             GameGetInput();
+        }else if (GameSelected.equals("C")) {
+            Credits();
         }else {
             System.out.println("Nothing selected");
         }
@@ -93,18 +137,20 @@ public class Frontend
         }
         System.out.println("");
         System.out.println("");
+        GamePrintEnemy();
         System.out.println("");
         System.out.println("");
-        System.out.println("");
-        System.out.println("                                    |----------------------------------------------"+ Door2 +"-----------------------------------------|");
-        System.out.print("                                    |                      ");
-        if (getBoolean() == true) {
-            System.out.print("▓███▓");
+        if (CurrentEnemyIsDead == false) {
+            System.out.println("                                    |----------------------------------------------"+ Door2 +"-----------------------------------------|");
+            System.out.println("                                    |                                                 ▓███▓                                          |");
+            System.out.println("                                    |                                                ▓▓   ▓▓                                         |");
+            System.out.println("                                    |                                                ▓▓   ▓▓                                          |");
         }else {
-            System.out.print("      ");
+            System.out.println("                                    |----------------------------------------------"+ Door2 +"-----------------------------------------|");
+            System.out.println("                                    |                                                                                                  |");
+            System.out.println("                                    |                                                                                                  |");
+            System.out.println("                                    |                                                                                                  |");
         }
-        System.out.println("                                    |                                                                                                 |");
-        System.out.println("                                    |                                                                                                 |");
         if (getBoolean() == true && Door2.equals("|========|")) {
             System.out.println("                                    -                                                                                                 -");
             int i = 0;
@@ -152,50 +198,114 @@ public class Frontend
         System.out.println("");
         System.out.println("");
     }
+    public void Credits() {
+        int i = 0;
+        while (i < 25) {
+            System.out.println("");
+            i++;
+        }
+        System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
+        System.out.print("""
+                                                            ░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                                    ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                                  ░▒▓██▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                                ░▒▓██▓▒░  ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                              ░▒▓██▓▒░    ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                             ░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░                                                          
+                                                             ░▒▓████████▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓████████▓▒░                                                  
+                                                                                                                                                                          
+                                                                                                                                                                                                                                          
+        """);
+        System.out.println("                                                                Entwickelt und realisiert von:");
+        System.out.println("                                                                Silas, Vivian, Alessa, Kristin");
+        System.out.println("                                                                    am Gymnasium Dorfen 10C");
+        i = 0;
+        while (i < 16) {
+            System.out.println("");
+            i++;
+        }
+        System.out.println("(B)ack");
+        i = 0;
+        while (i < 10) {
+            System.out.println("");
+            i++;
+        }
+        Scanner GameSelect = new Scanner(System.in);
+        String GameSelected = GameSelect.nextLine();
+        if (GameSelected.equals("N")) {
+            MainMenuS1();
+            try {
+                Thread.sleep(1 * 1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            MainMenu();
+            HPfull = 10;
+            HPcurrent = 5;
+            Manafull = 20;
+            Manacurrent = 0;
+            GameCalculateStats();
+            GamePrintWorld();
+            GamePrintActions();
+            GameGetInput();
+        }else if (GameSelected.equals("B")) {
+            FrontendAgain();
+        }else {
+            System.out.println("Err: Bad keybind (get rekt loser)");
+        }
+    }
     public void GameCalculateStats() {
-        HPStyled = "";
-        int i;
-        if ( HPcurrent == 0) {
-            i = 0;
+    HPStyled = "";
+    ManaStyled = "";
+    
+    // Calculate HP display
+    int hpFilled = HPcurrent * 15 / HPfull;  // Total bar size = 15
+    int hpEmpty = 15 - hpFilled;
+
+    // Add filled HP blocks
+    for (int i = 0; i < hpFilled; i++) {
+        HPStyled += "#";
+    }
+
+    // Add empty HP blocks
+    for (int i = 0; i < hpEmpty; i++) {
+        HPStyled += "-";
+    }
+
+    // Calculate Mana display
+    int manaFilled = Manacurrent * 15 / Manafull;  // Total bar size = 15
+    int manaEmpty = 15 - manaFilled;
+
+    // Add filled Mana blocks
+    for (int i = 0; i < manaFilled; i++) {
+        ManaStyled += "#";
+    }
+
+    // Add empty Mana blocks
+    for (int i = 0; i < manaEmpty; i++) {
+        ManaStyled += "-";
+    }
+}
+
+
+    public void GamePrintEnemy() {
+        int Min = 1;
+        int Max = 4;
+        int RandomEnemy = ThreadLocalRandom.current().nextInt(Min, Max + 1);
+        if (NewRoom == true) {
+            CurrentEnemy = DEFINITIONEN_Gegner.get(RandomEnemy).ReturnName();
+            CurrentEnemyHealth = DEFINITIONEN_Gegner.get(RandomEnemy).ReturnHP();
+            CurrentEnemyBasicAttack = DEFINITIONEN_Gegner.get(RandomEnemy).ReturnBasic();
+            CurrentEnemyMagicAttack = DEFINITIONEN_Gegner.get(RandomEnemy).ReturnMagic();
+            NewRoom = false;
+        }
+        if (CurrentEnemyHealth > 0) {
+            System.out.println("                                                                                        ❰  "+ CurrentEnemy +"  ❱"+ "   ❰ HP: "+CurrentEnemyHealth+" ❱");
         }else {
-            i = HPfull/HPcurrent;
+            CurrentEnemyIsDead = true;
+            System.out.println("                                                                                        ❰  Defeated  ❱"+ "   ❰  ❱");
         }
-        while (i < HPcurrent*5) {
-            HPStyled = HPStyled+ "#";
-            i = i + HPfull/HPcurrent;
-        }
-        if (HPcurrent > 0) {
-            while (i < HPfull*5) {
-                HPStyled = HPStyled+ "-";
-                i = i + HPfull/HPcurrent;
-            }
-        }else {
-            while (i < HPfull*20) {
-                HPStyled = HPStyled + "-";
-                i = i + HPfull;
-            }
-        }
-        ManaStyled = "";
-        if ( Manacurrent == 0) {
-            i = 0;
-        }else {
-            i = Manafull/Manacurrent;
-        }
-        while (i < Manacurrent*5) {
-            HPStyled = ManaStyled+ "#";
-            i = i + Manafull/Manacurrent;
-        }
-        if (Manacurrent > 0) {
-            while (i < Manafull*5) {
-                ManaStyled = ManaStyled+ "-";
-                i = i + Manafull/Manacurrent;
-            }
-        }else {
-            while (i < Manafull*20) {
-                ManaStyled = ManaStyled+ "-";
-                i = i + Manafull;
-            }
-        }
+        
     }
     public void GamePrintActions() {
         System.out.println("|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|");
@@ -232,16 +342,24 @@ public class Frontend
         Scanner DecidedInput = new Scanner(System.in);
         String GameSetInput = DecidedInput.nextLine();
         if (GameSetInput.equals("A") && Door1 == true) {
+            NewRoom = true;
             GamePrintWorld();
             GameCalculateStats();
             GamePrintActions();
         }else if (GameSetInput.equals("S") && Door2.equals("|========|")) {
+            NewRoom = true;
             GamePrintWorld();
             GameCalculateStats();
             GamePrintActions();
         }else if (GameSetInput.equals("D") && Door3 == true) {
+            NewRoom = true;
             GamePrintWorld();
             GameCalculateStats();
+            GamePrintActions();
+        }else if (GameSetInput.equals("M")) {
+            CurrentEnemyHealth = CurrentEnemyHealth - 3;
+            Manacurrent = Manacurrent - 2;
+            GamePrintWorld();
             GamePrintActions();
         }else {
             System.out.println("Err: Unknown Input");
