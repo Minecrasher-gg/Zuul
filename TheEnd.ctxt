@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=TheEnd
+comment1.params=line
+comment1.target=TheEnd(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ getLine()
+numComments=3
