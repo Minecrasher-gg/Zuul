@@ -55,7 +55,7 @@ public class Frontend
         String GameSelected = GameSelect.nextLine();
         if (GameSelected.equals("N")) {
             HPfull = 10;
-            HPcurrent = 5;
+            HPcurrent = 10;
             Manafull = 20;
             Manacurrent = 10;
             SelectGamemode();
@@ -238,7 +238,7 @@ public class Frontend
         String GameSelected = GameSelect.nextLine();
         if (GameSelected.equals("N")) {
             HPfull = 10;
-            HPcurrent = 5;
+            HPcurrent = 10;
             Manafull = 20;
             Manacurrent = 0;
             SelectGamemode();
@@ -278,6 +278,11 @@ public class Frontend
     // Add empty Mana blocks
     for (int i = 0; i < manaEmpty; i++) {
         ManaStyled += "-";
+    }
+    
+    if (HPcurrent == 0) {
+        System.out.println("You died loser (get rekt");
+        System.exit(0);
     }
 }
 
